@@ -31,7 +31,7 @@ app.whenReady().then(() => {
             winMonitor.closable = true;
             winMonitor.close();
         }
-    })
+    });
 
 
     // powerSaveBlocker.stop(id)
@@ -175,8 +175,18 @@ app.on('activate', () => {
 
 
 app.on('close', () => {
-    win = null;
-    winMonitor = null;
+
+    if (win) {
+        win.closable = true;
+        win.close();
+        win = null;
+    }
+
+    if (winMonitor) {
+        winMonitor.closable = true;
+        winMonitor.close();
+        winMonitor = null;
+    }
 });
 
 
