@@ -13,6 +13,8 @@ let win;
 let winMonitor;
 let online = 'offline';
 let continua = true;
+// let apiUrl = 'https://api.dev.openmart.com.br';
+let apiUrl = 'https://api.openmart.com.br';
 
 app.whenReady().then(() => {
     onlineStatusWindow = new BrowserWindow({width: 0, height: 0, show: false, webPreferences: {nodeIntegration: true}});
@@ -241,12 +243,12 @@ setInterval(function () {
                     if (token) {
                         getFromLocalStorage('lojaAtual').then(function (lojaAtual) {
                             if (lojaAtual) {
-                                const loja = JSON.parse(lojaAtual);
+                                const loja = JSON.parse(lojamAtual);
                                 if (!win.isMinimized()) {
                                     // chamar a api
                                     const request = net.request({
                                         method: 'PUT',
-                                        url: 'https://api.dev.openmart.com.br/picker/loja/' + loja.id + '/view',
+                                        url: apiUrl +'/picker/loja/' + loja.id + '/view',
                                     });
                                     request.setHeader('token', token);
                                     request.on('response', (response) => {
