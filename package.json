@@ -9,11 +9,10 @@
     "electron-winstaller": "^4.0.0"
   },
   "scripts": {
-    "electron": "electron .",
+    "start": "electron .",
     "electron-build": "npm run build && npm run electron",
-    "generate": "electron-packager . --platform=win32 --arch=x64 --icon=images/icon.ico openmart_picker --overwrite && node build.js",
-    "build": "electron-builder build --win --publish never",
-    "deploy": "electron-builder build --win --publish always"
+    "build" : "electron-packager . picker && --icon=images/icon.ico openmart_picker",
+    "generate": "electron-packager . --platform=win32 --arch=x64 --icon=images/icon.ico openmart_picker --overwrite && node build.js"
   },
   "build": {
     "productName": "Openmart Delivery Picker",
@@ -22,6 +21,7 @@
     }
   },
   "dependencies": {
+    "electron-is-dev": "^1.2.0",
     "electron-log": "^4.2.2",
     "electron-updater": "^4.3.1",
     "update-electron-app": "^1.5.0"

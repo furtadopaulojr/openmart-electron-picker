@@ -8,6 +8,16 @@ const update = require('update-electron-app')({
     logger: require('electron-log')
 });
 
+
+const isDev = require('electron-is-dev');
+
+if (isDev) {
+    console.log('Running in development');
+} else {
+    console.log('Running in production');
+}
+
+
 if (handleSquirrelEvent(app)) {
     // squirrel event handled and app will exit in 1000ms, so don't do anything else
     return;
