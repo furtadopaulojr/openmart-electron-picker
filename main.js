@@ -1,7 +1,7 @@
 const {app, BrowserWindow, screen, net, ipcMain, powerSaveBlocker} = require('electron');
+const {autoUpdater} = require('electron-updater');
 const url = require('url');
 const path = require('path');
-
 
 if (handleSquirrelEvent(app)) {
     // squirrel event handled and app will exit in 1000ms, so don't do anything else
@@ -72,6 +72,18 @@ ipcMain.on('online-status-changed', (event, status) => {
     }
 });
 
+ipcMain.on('restart_app', () => {
+    autoUpdater.quitAndInstall();
+});
+
+
+function closeNotification() {
+    notification.classList.add('hidden');
+}
+
+function restartApp() {
+    ipcRenderer.send('restart_app');
+}
 
 function createWindowPrincipal() {
     // Cria uma janela de navegação.
@@ -105,6 +117,10 @@ function createWindowPrincipal() {
             winMonitor = null;
         }
 
+    });
+
+    win.once('ready-to-show', () => {
+        autoUpdater.checkForUpdatesAndNotify();
     });
 }
 
@@ -248,7 +264,7 @@ setInterval(function () {
                                     // chamar a api
                                     const request = net.request({
                                         method: 'PUT',
-                                        url: apiUrl +'/picker/loja/' + loja.id + '/view',
+                                        url: apiUrl + '/picker/loja/' + loja.id + '/view',
                                     });
                                     request.setHeader('token', token);
                                     request.on('response', (response) => {
@@ -382,3 +398,9 @@ function handleSquirrelEvent(application) {
     }
 };
 
+autoUpdater.on('update-available', () => {
+    win.webContents.send('update_available');
+});
+autoUpdater.on('update-downloaded', () => {
+    win.webContents.send('update_downloaded');
+});

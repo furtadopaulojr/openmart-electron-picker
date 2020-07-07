@@ -18,5 +18,12 @@
     "win": {
       "icon": "./images/icon.ico"
     }
+  },
+  "dependencies": {
+    "electron-updater": "^4.3.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/furtadopaulojr/openmart-electron-picker.git"
   }
 }
