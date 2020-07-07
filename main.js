@@ -102,7 +102,6 @@ function createWindowPrincipal() {
     });
 }
 
-
 function createWindowMonitor() {
     if (!winMonitor) {
         let monitorW = 360;
@@ -186,7 +185,6 @@ app.on('close', () => {
     }
 });
 
-
 setInterval(function () {
     if (win) {
 
@@ -196,7 +194,7 @@ setInterval(function () {
         winMonitor.close();
         winMonitor = null;
     }
-}, 1000);
+}, 3000);
 
 setInterval(function () {
 
