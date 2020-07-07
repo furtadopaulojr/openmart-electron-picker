@@ -3,7 +3,8 @@
   "version": "1.0.7",
   "main": "main.js",
   "devDependencies": {
-    "electron": "^7.1.12",
+    "electron": "^7.3.2",
+    "electron-builder": "^22.7.0",
     "electron-packager": "^14.2.1",
     "electron-squirrel-startup": "^1.0.0",
     "electron-winstaller": "^4.0.0"
@@ -11,7 +12,9 @@
   "scripts": {
     "start": "electron .",
     "electron-build": "npm run build && npm run electron",
-    "build" : " electron-packager . --no-prune picker && --icon=images/icon.ico openmart_picker",
+    "build": "electron-builder build --win --publish never",
+    "deploy": "electron-builder build --win --publish always",
+
     "generate": "electron-packager . --platform=win32 --arch=x64 --icon=images/icon.ico openmart_picker --overwrite && node build.js"
   },
   "build": {
@@ -31,3 +34,5 @@
     "url": "https://github.com/furtadopaulojr/openmart-electron-picker.git"
   }
 }
+
+// "build": " electron-packager . --no-prune picker && --icon=images/icon.ico openmart_picker",

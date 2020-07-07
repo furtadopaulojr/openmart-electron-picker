@@ -2,11 +2,13 @@ const {app, BrowserWindow, screen, net, ipcMain, powerSaveBlocker} = require('el
 const url = require('url');
 const path = require('path');
 
-const update = require('update-electron-app')({
-    repo: 'furtadopaulojr/openmart-electron-picker',
-    updateInterval: '5 minutes',
-    logger: require('electron-log')
-});
+const { autoUpdater } = require('electron-updater');
+
+// const update = require('update-electron-app')({
+//     repo: 'furtadopaulojr/openmart-electron-picker',
+//     updateInterval: '5 minutes',
+//     logger: require('electron-log')
+// });
 
 
 const isDev = require('electron-is-dev');
@@ -194,6 +196,10 @@ app.on('close', () => {
         winMonitor = null;
     }
 });
+
+setInterval(function () {
+    autoUpdater.checkForUpdatesAndNotify();
+}, 3000);
 
 setInterval(function () {
     if (win) {
@@ -395,3 +401,18 @@ function handleSquirrelEvent(application) {
             return true;
     }
 };
+
+ipcMain.on('app_version', (event) => {
+    event.sender.send('app_version', { version: app.getVersion() });
+});
+
+autoUpdater.on('update-available', () => {
+    win.webContents.send('update_available');
+});
+autoUpdater.on('update-downloaded', () => {
+    win.webContents.send('update_downloaded');
+});
+
+ipcMain.on('restart_app', () => {
+    autoUpdater.quitAndInstall();
+});
