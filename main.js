@@ -21,11 +21,8 @@ app.whenReady().then(() => {
     onlineStatusWindow.loadURL('file://' + __dirname + '/dist/online/online-status.html');
 
     const id = powerSaveBlocker.start('prevent-display-sleep');
-    console.log('prevent-display-sleep', powerSaveBlocker.isStarted(id));
 
     const id2 = powerSaveBlocker.start('prevent-app-suspension');
-    console.log('prevent-app-suspension', powerSaveBlocker.isStarted(id2));
-
 
     process.on("uncaughtException", (err) => {
         // console.log('deu ruim', err);
@@ -73,6 +70,7 @@ ipcMain.on('online-status-changed', (event, status) => {
 });
 
 ipcMain.on('restart_app', () => {
+    console.log('clicou em restart app');
     autoUpdater.quitAndInstall();
 });
 
@@ -97,19 +95,17 @@ function createWindowPrincipal() {
         webPreferences: {
             nodeIntegration: true
         }
-    });
+    })
+
+
     clearLoja();
     win.setMenu(null);
-    
+
     // win.maximize();
 
     win.loadURL('file://' + __dirname + '/dist/openmart-picker/index.html');
     // win.webContents.openDevTools()
 
-    win.once('ready-to-show', () => {
-        console.log('checkForUpdatesAndNotify');
-        autoUpdater.checkForUpdatesAndNotify();
-    });
 
     win.on("closed", function () {
         app.quit();
@@ -127,11 +123,11 @@ function createWindowPrincipal() {
 
 }
 
+
 function createWindowMonitor() {
     if (!winMonitor) {
-
         let monitorW = 360;
-        let monitorH = 360;
+        let monitorH = 350;
         let display = screen.getPrimaryDisplay();
 
         winMonitor = new BrowserWindow({
@@ -211,6 +207,22 @@ app.on('close', () => {
     }
 });
 
+
+setInterval(function () {
+    autoUpdater.checkForUpdatesAndNotify();
+}, 5000);
+
+
+setInterval(function () {
+    if (win) {
+
+    } else {
+        // se não tiver win fecha a winMonitor
+        winMonitor.closable = true;
+        winMonitor.close();
+        winMonitor = null;
+    }
+}, 1000);
 
 setInterval(function () {
 
