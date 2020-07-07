@@ -116,7 +116,6 @@ function createWindowPrincipal() {
             winMonitor.close();
             winMonitor = null;
         }
-
     });
 
     win.once('ready-to-show', () => {
@@ -128,7 +127,7 @@ function createWindowMonitor() {
     if (!winMonitor) {
 
         let monitorW = 360;
-        let monitorH = 350;
+        let monitorH = 360;
         let display = screen.getPrimaryDisplay();
 
         winMonitor = new BrowserWindow({
