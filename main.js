@@ -1,7 +1,12 @@
 const {app, BrowserWindow, screen, net, ipcMain, powerSaveBlocker} = require('electron');
-const {autoUpdater} = require('electron-updater');
 const url = require('url');
 const path = require('path');
+
+const update = require('update-electron-app')({
+    repo: 'furtadopaulojr/openmart-electron-picker',
+    updateInterval: '5 minutes',
+    logger: require('electron-log')
+});
 
 if (handleSquirrelEvent(app)) {
     // squirrel event handled and app will exit in 1000ms, so don't do anything else
@@ -31,10 +36,6 @@ app.whenReady().then(() => {
             winMonitor.close();
         }
     });
-
-
-    // powerSaveBlocker.stop(id)
-    // powerSaveBlocker.stop(id2)
 
 });
 
@@ -69,19 +70,6 @@ ipcMain.on('online-status-changed', (event, status) => {
     }
 });
 
-ipcMain.on('restart_app', () => {
-    console.log('clicou em restart app');
-    autoUpdater.quitAndInstall();
-});
-
-
-function closeNotification() {
-    notification.classList.add('hidden');
-}
-
-function restartApp() {
-    ipcRenderer.send('restart_app');
-}
 
 function createWindowPrincipal() {
     // Cria uma janela de navegação.
@@ -97,19 +85,12 @@ function createWindowPrincipal() {
         }
     })
 
-
     clearLoja();
     win.setMenu(null);
-
-    // win.maximize();
-
     win.loadURL('file://' + __dirname + '/dist/openmart-picker/index.html');
-    // win.webContents.openDevTools()
-
 
     win.on("closed", function () {
         app.quit();
-
         continua = false;
         win = null;
 
@@ -119,8 +100,6 @@ function createWindowPrincipal() {
             winMonitor = null;
         }
     });
-
-
 }
 
 
@@ -206,11 +185,6 @@ app.on('close', () => {
         winMonitor = null;
     }
 });
-
-
-setInterval(function () {
-    autoUpdater.checkForUpdatesAndNotify();
-}, 60000);
 
 
 setInterval(function () {
@@ -413,10 +387,3 @@ function handleSquirrelEvent(application) {
             return true;
     }
 };
-
-autoUpdater.on('update-available', () => {
-    win.webContents.send('update_available');
-});
-autoUpdater.on('update-downloaded', () => {
-    win.webContents.send('update_downloaded');
-});
