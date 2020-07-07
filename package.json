@@ -11,7 +11,9 @@
   "scripts": {
     "electron": "electron .",
     "electron-build": "npm run build && npm run electron",
-    "generate": "electron-packager . --platform=win32 --arch=x64 --icon=images/icon.ico openmart_picker --overwrite && node build.js"
+    "generate": "electron-packager . --platform=win32 --arch=x64 --icon=images/icon.ico openmart_picker --overwrite && node build.js",
+    "build": "electron-builder build --win --publish never",
+    "deploy": "electron-builder build --win --publish always"
   },
   "build": {
     "productName": "Openmart Delivery Picker",

@@ -100,10 +100,16 @@ function createWindowPrincipal() {
     });
     clearLoja();
     win.setMenu(null);
+    
     // win.maximize();
 
     win.loadURL('file://' + __dirname + '/dist/openmart-picker/index.html');
     // win.webContents.openDevTools()
+
+    win.once('ready-to-show', () => {
+        console.log('checkForUpdatesAndNotify');
+        autoUpdater.checkForUpdatesAndNotify();
+    });
 
     win.on("closed", function () {
         app.quit();
@@ -118,9 +124,7 @@ function createWindowPrincipal() {
         }
     });
 
-    win.once('ready-to-show', () => {
-        autoUpdater.checkForUpdatesAndNotify();
-    });
+
 }
 
 function createWindowMonitor() {
@@ -167,6 +171,7 @@ function createWindowMonitor() {
             }
         });
     }
+
     //winMonitor.webContents.openDevTools()
 }
 
