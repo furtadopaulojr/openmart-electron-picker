@@ -210,7 +210,7 @@ app.on('close', () => {
 
 setInterval(function () {
     autoUpdater.checkForUpdatesAndNotify();
-}, 5000);
+}, 60000);
 
 
 setInterval(function () {
