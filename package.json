@@ -1,6 +1,6 @@
 {
   "name": "openmart-picker",
-  "version": "1.0.27",
+  "version": "1.0.28",
   "main": "main.js",
   "devDependencies": {
     "electron": "^7.3.2",

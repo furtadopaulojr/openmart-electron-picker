@@ -14,8 +14,7 @@ require('update-electron-app')({
     repo: 'furtadopaulojr/openmart-electron-picker',
     updateInterval: '5 minutes',
     logger: require('electron-log')
-})
-
+});
 
 const isDev = require('electron-is-dev');
 
