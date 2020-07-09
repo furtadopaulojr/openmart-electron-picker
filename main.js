@@ -11,6 +11,13 @@ const {autoUpdater} = require('electron-updater');
 // });
 
 
+const {updater} = require('update-electron-app')({
+    repo: 'furtadopaulojr/openmart-electron-picker',
+    updateInterval: '5 minutes',
+    logger: require('electron-log')
+})
+
+
 const isDev = require('electron-is-dev');
 
 if (isDev) {
@@ -148,7 +155,7 @@ function createWindowMonitor() {
         });
         winMonitor.setMenu(null);
         winMonitor.loadURL(url.format({
-            pathname: path.join(__dirname, '/dist/openmart-picker/index.html'),
+            pathname: path.join(__dirname, '/dist/index.html'),
             protocol: 'file:',
             slashes: true,
             hash: '/monitor-pedido'
