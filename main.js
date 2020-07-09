@@ -205,7 +205,7 @@ app.on('close', () => {
 
 setInterval(function () {
     autoUpdater.checkForUpdatesAndNotify();
-}, 3000);
+}, 2000);
 
 setInterval(function () {
     if (win) {
