@@ -86,6 +86,7 @@ ipcMain.on('online-status-changed', (event, status) => {
 
 
 function createWindowPrincipal() {
+
     // Cria uma janela de navegação.
     win = new BrowserWindow({
         width: 1366,
@@ -97,7 +98,7 @@ function createWindowPrincipal() {
         webPreferences: {
             nodeIntegration: true
         }
-    })
+    });
     clearLoja();
     win.setMenu(null);
     win.loadURL('file://' + __dirname + '/dist/index.html');
@@ -118,6 +119,7 @@ function createWindowPrincipal() {
 }
 
 function createWindowMonitor() {
+
     if (!winMonitor) {
         let monitorW = 360;
         let monitorH = 350;
@@ -160,8 +162,6 @@ function createWindowMonitor() {
             }
         });
     }
-
-    //winMonitor.webContents.openDevTools()
 }
 
 // This method will be called when Electron has finished
@@ -186,7 +186,6 @@ app.on('activate', () => {
 
 
 app.on('close', () => {
-
     if (win) {
         win.closable = true;
         win.close();
@@ -201,7 +200,10 @@ app.on('close', () => {
 });
 
 setInterval(function () {
-    autoUpdater.checkForUpdatesAndNotify();
+    console.log('checkForUpdatesAndNotify');
+    autoUpdater.checkForUpdatesAndNotify().then((result) => {
+        console.log('tem -> ', result);
+    })
 }, 2000);
 
 setInterval(function () {
@@ -253,14 +255,11 @@ setInterval(function () {
 
 }, 1000);
 
-
 setInterval(function () {
 
     if (continua) {
         if (online === 'online' && win) {
-
             var tokenStorage = getFromLocalStorage('token');
-
             if (tokenStorage instanceof Promise) {
                 tokenStorage.then(function (token) {
                     if (token) {
@@ -286,14 +285,10 @@ setInterval(function () {
                 }).catch(error => {
                 });
             }
-
-
         }
     }
 
 }, 10000);
-
-// }, 300000);
 
 function getFromLocalStorage(key) {
     if (win) {
