@@ -10,8 +10,7 @@ const {autoUpdater} = require('electron-updater');
 //     logger: require('electron-log')
 // });
 
-
-const {updater} = require('update-electron-app')({
+require('update-electron-app')({
     repo: 'furtadopaulojr/openmart-electron-picker',
     updateInterval: '5 minutes',
     logger: require('electron-log')
