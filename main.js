@@ -104,7 +104,7 @@ function createWindowPrincipal() {
 
     win.loadURL('file://' + __dirname + '/dist/index.html');
 
-    // win.webContents.openDevTools();
+    win.webContents.openDevTools();
 
     win.on("closed", function () {
         app.quit();
