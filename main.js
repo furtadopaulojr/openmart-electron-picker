@@ -98,10 +98,8 @@ function createWindowPrincipal() {
             nodeIntegration: true
         }
     })
-
     clearLoja();
     win.setMenu(null);
-
     win.loadURL('file://' + __dirname + '/dist/index.html');
 
     win.webContents.openDevTools();
