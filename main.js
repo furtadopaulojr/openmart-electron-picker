@@ -4,12 +4,6 @@ const path = require('path');
 
 const {autoUpdater} = require('electron-updater');
 
-// const update = require('update-electron-app')({
-//     repo: 'furtadopaulojr/openmart-electron-picker',
-//     updateInterval: '5 minutes',
-//     logger: require('electron-log')
-// });
-
 require('update-electron-app')({
     repo: 'furtadopaulojr/openmart-electron-picker',
     updateInterval: '5 minutes',
