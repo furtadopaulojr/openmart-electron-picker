@@ -1,6 +1,6 @@
 {
   "name": "openmart-picker",
-  "version": "1.0.8",
+  "version": "1.0.24",
   "main": "main.js",
   "devDependencies": {
     "electron": "^7.3.2",
@@ -14,14 +14,27 @@
     "electron-build": "npm run build && npm run electron",
     "build": "electron-builder build --win --publish never",
     "deploy": "electron-builder build --win --publish always",
-
     "generate": "electron-packager . --platform=win32 --arch=x64 --icon=images/icon.ico openmart_picker --overwrite && node build.js"
   },
   "build": {
     "productName": "Openmart Delivery Picker",
     "win": {
+      "target": [
+        "nsis"
+      ],
       "icon": "./images/icon.ico"
-    }
+    },
+    "nsis": {
+      "allowToChangeInstallationDirectory": true,
+      "oneClick": false
+    },
+    "directories": {
+      "app": ".",
+      "output": "app"
+    },
+    "files": [
+      "**/*"
+    ]
   },
   "dependencies": {
     "electron-is-dev": "^1.2.0",
@@ -34,5 +47,3 @@
     "url": "https://github.com/furtadopaulojr/openmart-electron-picker.git"
   }
 }
-
-// "build": " electron-packager . --no-prune picker && --icon=images/icon.ico openmart_picker",

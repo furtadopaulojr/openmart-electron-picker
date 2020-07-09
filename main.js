@@ -1,8 +1,8 @@
-const {app, BrowserWindow, screen, net, ipcMain, powerSaveBlocker} = require('electron');
+const {app, BrowserWindow, screen, net, ipcMain, powerSaveBlocker, protocol,} = require('electron');
 const url = require('url');
 const path = require('path');
 
-const { autoUpdater } = require('electron-updater');
+const {autoUpdater} = require('electron-updater');
 
 // const update = require('update-electron-app')({
 //     repo: 'furtadopaulojr/openmart-electron-picker',
@@ -32,6 +32,9 @@ let online = 'offline';
 let continua = true;
 // let apiUrl = 'https://api.dev.openmart.com.br';
 let apiUrl = 'https://api.openmart.com.br';
+
+
+protocol.registerSchemesAsPrivileged([{scheme: 'app', privileges: {secure: true, standard: true}}]);
 
 app.whenReady().then(() => {
     onlineStatusWindow = new BrowserWindow({width: 0, height: 0, show: false, webPreferences: {nodeIntegration: true}});
@@ -99,7 +102,10 @@ function createWindowPrincipal() {
 
     clearLoja();
     win.setMenu(null);
-    win.loadURL('file://' + __dirname + '/dist/openmart-picker/index.html');
+
+    win.loadURL('file://' + __dirname + '/dist/index.html');
+
+    // win.webContents.openDevTools();
 
     win.on("closed", function () {
         app.quit();
@@ -299,15 +305,19 @@ function getFromLocalStorage(key) {
 }
 
 function clearLoja() {
-    win.webContents.executeJavaScript('localStorage.removeItem("lojaAtual");', true).then(function (lojaAtual) {
-    }).catch(error => {
-    });
+    if (win) {
+        win.webContents.executeJavaScript('localStorage.removeItem("lojaAtual");', true).then((lojaAtual) => {
+        }).catch(error => {
+        });
+    }
 }
 
 function clearToken() {
-    win.webContents.executeJavaScript('localStorage.removeItem("token");', true).then(function (e) {
-    }).catch(error => {
-    });
+    if (win) {
+        win.webContents.executeJavaScript('localStorage.removeItem("token");', true).then((e) => {
+        }).catch(error => {
+        });
+    }
 }
 
 function openMonitorIfHasLoja() {
@@ -403,7 +413,7 @@ function handleSquirrelEvent(application) {
 };
 
 ipcMain.on('app_version', (event) => {
-    event.sender.send('app_version', { version: app.getVersion() });
+    event.sender.send('app_version', {version: app.getVersion()});
 });
 
 autoUpdater.on('update-available', () => {
