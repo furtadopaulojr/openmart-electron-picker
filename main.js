@@ -84,7 +84,6 @@ ipcMain.on('online-status-changed', (event, status) => {
     }
 });
 
-
 function createWindowPrincipal() {
 
     // Cria uma janela de navegação.
@@ -411,6 +410,11 @@ ipcMain.on('app_version', (event) => {
 autoUpdater.on('update-available', () => {
     win.webContents.send('update_available');
 });
+
+autoUpdater.on('download-progress', () => {
+    win.webContents.send('download_progress');
+});
+
 autoUpdater.on('update-downloaded', () => {
     win.webContents.send('update_downloaded');
 });
