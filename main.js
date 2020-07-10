@@ -419,5 +419,5 @@ autoUpdater.on('update-downloaded', () => {
 });
 
 ipcMain.on('restart_app', () => {
-    autoUpdater.quitAndInstall();
+    autoUpdater.quitAndInstall(false, true);
 });

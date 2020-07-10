@@ -1,0 +1,24 @@
+Para gerar o arquivo,
+a pasta dist é onde deve estar os aquivos buildados do angular (picker).
+
+A pasta app será o final, onde o executavel é gerado.
+
+
+Hoje como eu faço:
+
+Faço qualquer modificação, qualquer.
+Comito e push, no git e no origin(bitbucket).
+
+
+se quiser testar, pode rodar o comando
+npm run build
+
+isso fará o build e vai gerar o executavel.
+
+
+quando finalizar todos os testes e quiser gerar uma release, rode o comando
+npm run deploy
+
+isso criará uma nova release no git, mas ainda não vai estar disponivel para os clientes baixarem.
+
+é necessário ir no git e publicar a release, só assim os clientes serão notificados que existe uma nova versão.
