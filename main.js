@@ -199,9 +199,8 @@ app.on('close', () => {
 });
 
 setInterval(function () {
-    console.log('checkForUpdatesAndNotify');
     autoUpdater.checkForUpdatesAndNotify().then((result) => {
-        console.log('tem -> ', result);
+
     })
 }, 2000);
 
