@@ -419,5 +419,16 @@ autoUpdater.on('update-downloaded', () => {
 });
 
 ipcMain.on('restart_app', () => {
+    if (win) {
+        win.closable = true;
+        win.close();
+        win = null;
+    }
+
+    if (winMonitor) {
+        winMonitor.closable = true;
+        winMonitor.close();
+        winMonitor = null;
+    }
     autoUpdater.quitAndInstall(false, true);
 });
