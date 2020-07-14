@@ -4,12 +4,6 @@ const path = require('path');
 
 const {autoUpdater} = require('electron-updater');
 
-// require('update-electron-app')({
-//     repo: 'furtadopaulojr/openmart-electron-picker',
-//     updateInterval: '5 minutes',
-//     logger: require('electron-log')
-// });
-
 const isDev = require('electron-is-dev');
 
 if (isDev) {
@@ -29,8 +23,12 @@ let win;
 let winMonitor;
 let online = 'offline';
 let continua = true;
+
 // let apiUrl = 'https://api.dev.openmart.com.br';
 let apiUrl = 'https://api.openmart.com.br';
+
+let mainUrl = 'https://openmart-picker.herokuapp.com';
+// let mainUrl = 'https://picker.openmart.com.br';
 
 
 protocol.registerSchemesAsPrivileged([{scheme: 'app', privileges: {secure: true, standard: true}}]);
@@ -100,9 +98,9 @@ function createWindowPrincipal() {
     });
     clearLoja();
     win.setMenu(null);
-    win.loadURL('file://' + __dirname + '/dist/index.html');
+    // win.loadURL('file://' + __dirname + '/dist/index.html');
 
-    win.webContents.openDevTools();
+    win.loadURL(mainUrl);
 
     win.on("closed", function () {
         app.quit();
@@ -145,12 +143,14 @@ function createWindowMonitor() {
             }
         });
         winMonitor.setMenu(null);
-        winMonitor.loadURL(url.format({
-            pathname: path.join(__dirname, '/dist/index.html'),
-            protocol: 'file:',
-            slashes: true,
-            hash: '/monitor-pedido'
-        }));
+        // winMonitor.loadURL(url.format({
+        //     pathname: path.join(__dirname, '/dist/index.html'),
+        //     protocol: 'file:',
+        //     slashes: true,
+        //     hash: '/monitor-pedido'
+        // }));
+
+        winMonitor.loadURL(mainUrl + '/#/monitor-pedido');
 
         winMonitor.on("closed", function () {
             if (winMonitor) {
@@ -200,11 +200,11 @@ app.on('close', () => {
 
 setInterval(function () {
     autoUpdater.checkForUpdatesAndNotify().then((result) => {
-
     })
 }, 2000);
 
 setInterval(function () {
+
     if (win) {
 
     } else {
@@ -212,6 +212,7 @@ setInterval(function () {
         winMonitor.closable = true;
         winMonitor.close();
         winMonitor = null;
+        app.quit();
     }
 }, 3000);
 
