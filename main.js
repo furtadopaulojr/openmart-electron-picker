@@ -27,8 +27,8 @@ let continua = true;
 // let apiUrl = 'https://api.dev.openmart.com.br';
 let apiUrl = 'https://api.openmart.com.br';
 
-let mainUrl = 'https://openmart-picker.herokuapp.com';
-// let mainUrl = 'https://picker.openmart.com.br';
+// let mainUrl = 'https://openmart-picker.herokuapp.com';
+let mainUrl = 'https://picker.openmart.com.br';
 
 
 protocol.registerSchemesAsPrivileged([{scheme: 'app', privileges: {secure: true, standard: true}}]);
@@ -53,6 +53,9 @@ app.whenReady().then(() => {
 
 ipcMain.on('online-status-changed', (event, status) => {
     online = status;
+
+    console.log('status->', status);
+
     if (status === 'offline') {
         if (winMonitor) {
             winMonitor.closable = true;
@@ -116,7 +119,6 @@ function createWindowPrincipal() {
 }
 
 function createWindowMonitor() {
-
     if (!winMonitor) {
         let monitorW = 360;
         let monitorH = 350;
@@ -143,13 +145,6 @@ function createWindowMonitor() {
             }
         });
         winMonitor.setMenu(null);
-        // winMonitor.loadURL(url.format({
-        //     pathname: path.join(__dirname, '/dist/index.html'),
-        //     protocol: 'file:',
-        //     slashes: true,
-        //     hash: '/monitor-pedido'
-        // }));
-
         winMonitor.loadURL(mainUrl + '/#/monitor-pedido');
 
         winMonitor.on("closed", function () {
@@ -179,7 +174,7 @@ app.on('activate', () => {
     // On macOS it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
     if (BrowserWindow.getAllWindows().length === 0) {
-        createWindowPrincipal()
+        createWindowPrincipal();
     }
 });
 
@@ -201,7 +196,7 @@ app.on('close', () => {
 setInterval(function () {
     autoUpdater.checkForUpdatesAndNotify().then((result) => {
     })
-}, 2000);
+}, 30000);
 
 setInterval(function () {
 
@@ -227,7 +222,9 @@ setInterval(function () {
                         getFromLocalStorage('lojaAtual').then(function (lojaAtual) {
                             if (lojaAtual) {
                                 if (!winMonitor) {
-                                    createWindowMonitor();
+                                    if (online === 'online') {
+                                        createWindowMonitor();
+                                    }
                                 }
                             } else {
                                 winMonitor.closable = true;
