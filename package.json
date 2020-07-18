@@ -1,6 +1,6 @@
 {
   "name": "openmart-picker",
-  "version": "1.1.20",
+  "version": "1.1.22",
   "main": "main.js",
   "devDependencies": {
     "electron": "^7.3.2",
@@ -12,7 +12,7 @@
   "scripts": {
     "start": "electron .",
     "electron-build": "npm run build && npm run electron",
-    "build": "electron-builder build --win --publish never",
+    "build": "electron-builder  build --win --ia32 --publish never",
     "deploy": "electron-builder build --win --publish always",
     "generate": "electron-packager . --platform=win32 --arch=x64 --icon=images/icon.ico openmart_picker --overwrite && node build.js"
   },

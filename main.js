@@ -104,6 +104,7 @@ function createWindowPrincipal() {
     // win.loadURL('file://' + __dirname + '/dist/index.html');
 
     win.loadURL(mainUrl);
+	// win.webContents.openDevTools();
 
     win.on("closed", function () {
         app.quit();
@@ -146,6 +147,8 @@ function createWindowMonitor() {
         });
         winMonitor.setMenu(null);
         winMonitor.loadURL(mainUrl + '/#/monitor-pedido');
+
+		// winMonitor.webContents.openDevTools();
 
         winMonitor.on("closed", function () {
             if (winMonitor) {
