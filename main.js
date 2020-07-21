@@ -54,8 +54,6 @@ app.whenReady().then(() => {
 ipcMain.on('online-status-changed', (event, status) => {
     online = status;
 
-    console.log('status->', status);
-
     if (status === 'offline') {
         if (winMonitor) {
             winMonitor.closable = true;
@@ -104,7 +102,7 @@ function createWindowPrincipal() {
     // win.loadURL('file://' + __dirname + '/dist/index.html');
 
     win.loadURL(mainUrl);
-	// win.webContents.openDevTools();
+    // win.webContents.openDevTools();
 
     win.on("closed", function () {
         app.quit();
@@ -148,7 +146,7 @@ function createWindowMonitor() {
         winMonitor.setMenu(null);
         winMonitor.loadURL(mainUrl + '/#/monitor-pedido');
 
-		// winMonitor.webContents.openDevTools();
+        // winMonitor.webContents.openDevTools();
 
         winMonitor.on("closed", function () {
             if (winMonitor) {
@@ -256,6 +254,7 @@ setInterval(function () {
 
 setInterval(function () {
 
+
     if (continua) {
         if (online === 'online' && win) {
             var tokenStorage = getFromLocalStorage('token');
@@ -264,7 +263,7 @@ setInterval(function () {
                     if (token) {
                         getFromLocalStorage('lojaAtual').then(function (lojaAtual) {
                             if (lojaAtual) {
-                                const loja = JSON.parse(lojamAtual);
+                                const loja = JSON.parse(lojaAtual);
                                 if (!win.isMinimized()) {
                                     // chamar a api
                                     const request = net.request({
